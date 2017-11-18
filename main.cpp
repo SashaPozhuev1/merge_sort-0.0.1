@@ -65,16 +65,16 @@ void write(double * mass, int size) {
 	}
 }
 
-void merge_sort(double * mass, int left, int right) {
+void merge_sort(double * mass, double *tmp, int left, int right) {
 	if (left == right) {
 		return;
 	}
 	
 	int mid = (left + right) / 2;
-	merge_sort(mass, left, mid);
-	merge_sort(mass, mid + 1, right);
+	merge_sort(mass, tmp, left, mid);
+	merge_sort(mass, tmp, mid + 1, right);
 
-	double* tmp = new double[right + 1];
+	tmp = new double[right + 1];
 	int i = left, j = mid + 1;
 
 	for (int k = left; k < right + 1; k++) {
@@ -111,11 +111,12 @@ void error() {
 int main()
 {
 	int size = 0;
-	double * mass = nullptr;
+	double* mass = nullptr;
+	double* tmp = nullptr;
 
 	if (read(size)) {
 		if (create(mass, size)) {
-			merge_sort(mass, 0, size - 1);
+			merge_sort(mass, tmp, 0, size - 1);
 			write(mass, size);
 			delete[] mass;
 		}
